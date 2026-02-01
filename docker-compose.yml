@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  forge-simulator:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    working_dir: /home/forge/default
+    volumes:
+      # Mount the 'dist' folder so we can access the built script
+      - ./dist:/home/forge/dist
+    command: tail -f /dev/null # Keep running
