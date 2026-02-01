@@ -7,7 +7,7 @@
 set -e
 
 # Configuration
-KEEP_RELEASES=3
+KEEP_RELEASES=1
 KEEP_LOGS_DAYS=30
 KEEP_CACHE_DAYS=7
 DRY_RUN="${DRY_RUN:-false}"
