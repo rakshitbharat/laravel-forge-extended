@@ -18,6 +18,7 @@ BUILD_TARGETS=(
 # Standalone scripts (no Python embedding needed)
 STANDALONE_TARGETS=(
     "src/bash/cleanup.sh|dist/cleanup.sh"
+    "src/bash/fastpanel-fix.sh|dist/fastpanel-fix.sh"
 )
 
 # ==============================================================================
@@ -98,6 +99,13 @@ for target in "${BUILD_TARGETS[@]}"; do
     IFS='|' read -r bash_src python_src output <<< "$target"
     if [ -f "$output" ]; then
         size=$(wc -c < "$output" | tr -d ' ')
+        echo "  ✓ $output (${size} bytes)"
+    fi
+done
+for target in "${STANDALONE_TARGETS[@]}"; do
+    IFS='|' read -r source output <<< "$target"
+    if [ -f "$output" ]; then
+        size=$(wc -c <"$output" | tr -d ' ')
         echo "  ✓ $output (${size} bytes)"
     fi
 done

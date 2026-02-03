@@ -52,6 +52,99 @@ curl -sL https://raw.githubusercontent.com/rakshitbharat/laravel-forge-extended/
 
 ---
 
+## ⚡ FastPanel Quick Fix
+
+A comprehensive one-liner to diagnose and fix common FastPanel installation and configuration issues. Perfect for newly installed FastPanel servers or troubleshooting existing installations.
+
+### Features
+
+- ✅ Detects FastPanel installation status
+- ✅ Checks and restarts all FastPanel services
+- ✅ Sets/resets admin password
+- ✅ Fixes file permissions
+- ✅ Generates auto-login URLs
+- ✅ Performs system health checks
+- ✅ Validates firewall configuration
+- ✅ Lists all FastPanel users
+- ✅ Displays system information and resource usage
+
+### Quick Start
+
+**Basic Usage (uses default password):**
+```bash
+curl -sL https://raw.githubusercontent.com/rakshitbharat/laravel-forge-extended/main/dist/fastpanel-fix.sh | sudo bash
+```
+
+**With Custom Password:**
+```bash
+curl -sL https://raw.githubusercontent.com/rakshitbharat/laravel-forge-extended/main/dist/fastpanel-fix.sh | FASTPANEL_PASSWORD='YourSecurePassword123#@' sudo bash
+```
+
+**With Custom Username:**
+```bash
+curl -sL https://raw.githubusercontent.com/rakshitbharat/laravel-forge-extended/main/dist/fastpanel-fix.sh | FASTPANEL_USER='admin' FASTPANEL_PASSWORD='YourPassword' sudo bash
+```
+
+### What It Does
+
+1. **System Check** - Verifies root access and displays system information
+2. **Service Health** - Checks all FastPanel services (fastpanel2, nginx, apps, stats)
+3. **Auto-Restart** - Restarts any stopped services automatically
+4. **Permission Fix** - Corrects file permissions for FastPanel directories
+5. **Password Reset** - Sets or updates the admin password
+6. **Access URLs** - Generates both auto-login and standard login URLs
+7. **Firewall Check** - Validates port 8888 is accessible
+8. **User Management** - Lists all FastPanel users and their roles
+
+### Default Credentials
+
+If you don't specify a password, the script uses:
+- **Username:** `fastuser`
+- **Password:** `FastPanel2024#@`
+
+### Common Use Cases
+
+**After Fresh Installation:**
+```bash
+# Set your password and get access URL
+curl -sL https://raw.githubusercontent.com/rakshitbharat/laravel-forge-extended/main/dist/fastpanel-fix.sh | FASTPANEL_PASSWORD='MyPassword123#@' sudo bash
+```
+
+**Forgot Password:**
+```bash
+# Reset password and get new login URL
+curl -sL https://raw.githubusercontent.com/rakshitbharat/laravel-forge-extended/main/dist/fastpanel-fix.sh | FASTPANEL_PASSWORD='NewPassword123#@' sudo bash
+```
+
+**Services Not Running:**
+```bash
+# Diagnose and restart services
+curl -sL https://raw.githubusercontent.com/rakshitbharat/laravel-forge-extended/main/dist/fastpanel-fix.sh | sudo bash
+```
+
+### Manual Commands
+
+After running the fix script, you can use these commands directly:
+
+```bash
+# Generate new auto-login URL
+mogwai usr
+
+# List all users
+mogwai users list
+
+# Change password manually
+mogwai chpasswd --username=fastuser --password='NewPassword'
+
+# Check service status
+systemctl status fastpanel2
+
+# Restart services
+systemctl restart fastpanel2
+```
+
+---
+
 ## 🧹 Server Cleanup (Zero-Downtime Deployments)
 
 Automatically clean up old releases, logs, cache, and temporary files across **all sites** on your Forge server.
